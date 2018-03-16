@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 import * as actions from '../actions';
 import logo from "../logo.svg";
 
-class App extends Component {
+export class App extends Component {
 
   renderDogImg(dog) {
     let imgTag = '';
-
-    console.log(dog);
 
     if (dog)
       imgTag = <img src={dog} />
@@ -19,7 +17,7 @@ class App extends Component {
   }
 
   render() {
-    const { fetching, dog, error, requestRandomDog } = this.props;
+    const { fetching, dog, error, requestRandomDog, requestAfricanDog } = this.props;
 
     return (
       <div className="App">
@@ -38,6 +36,12 @@ class App extends Component {
           <button disabled>Fetching...</button>
         ) : (
           <button onClick={requestRandomDog}>Request a Dog</button>
+        )}
+
+         {fetching ? (
+          <button disabled>Fetching African Dog...</button>
+        ) : (
+          <button onClick={requestAfricanDog}>Request an African Dog</button>
         )}
 
         {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
