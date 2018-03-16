@@ -1,7 +1,7 @@
 import { RANDOM_DOG_API_CALL_REQUEST, RANDOM_DOG_API_CALL_SUCCESS, 
         RANDOM_DOG_API_CALL_FAILURE, AFRICAN_DOG_API_CALL_REQUEST,
         AFRICAN_DOG_API_CALL_SUCCESS, AFRICAN_DOG_API_CALL_FAILURE } from './actions/types';
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, takeEvery, call, put, all, select } from 'redux-saga/effects';
 import axios from 'axios';
 
 // create Saga watcher (using js generators)
@@ -10,6 +10,11 @@ export function* watcherSaga() {
     // yield takeLatest(AFRICAN_DOG_API_CALL_REQUEST, randomAfricanDog);
 
     yield all([
+        yield takeEvery('*', function* logger(action) {
+            const state = yield select();
+            console.log('action', action);
+            console.log('state', state)
+        }),
         yield takeLatest(RANDOM_DOG_API_CALL_REQUEST, randonDogSaga),
         yield takeLatest(AFRICAN_DOG_API_CALL_REQUEST, randomAfricanDog)
     ]);
